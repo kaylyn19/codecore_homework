@@ -22,24 +22,12 @@ const drawLine = function(len) {
     return '\u2501'.repeat(len)
 }
 
-const drawBarsAround = function (list, charLength) {
-    let result = "";
-    for ( let names of list) {
-        let space = charLength - names.length
-        result +=  "\n" + "\u2503" + names + " ".repeat(space) + "\u2503" + "\n"
-    } return result;
+const drawBarsAround = function (names) {
+    return "\u2503" + names + "\u2503" 
 }
 
 
 const drawTopBorder = function(list, lines) {
-    // let result = ""
-    // if (list.length === 0) {
-    //     result += "\u250F" + "\u2513" ;
-    //     return result;
-    // } else {
-    //     result = "\u250F" + lines + "\u2513" ;
-    //     return result;
-    // }
     let result = ""
     result = "\u250F" + lines + "\u2513" ;
     return result;
@@ -52,33 +40,26 @@ const drawMiddleBorder = function(list, lines) {
 }
 
 const drawBottomBorder = function(list, lines) {
-    // let result = ""
-    // if (list.length === 0) {
-    //     result += "\u2517" + "\u251B" ;
-    //     return result;
-    // } else {
-    //     result = "\u2517" + lines + "\u251B" ;
-    //     return result;
-    // }
     let result = ""
     result = "\u2517" + lines + "\u251B" ;
     return result;
 }
 
-const boxIt = function(list, charLength, bars, line, top, bottom, middle) {
+const boxIt = function(list, charLength, line, top, bottom, middle) {
     if (list.length === 0) {
         return top + "\n" + bottom;
     } else if ( list.length === 1) {
         return top + "\n" + "\u2503" +  list[0] + "\u2503" + "\n" + bottom;
     } 
     
-    let output = top + "";
-    let result = "";
+    let outputMiddle = "";
+    let outputTopBottom = "";
     for ( let i = 0; i < list.length - 1; i++) {
-        let space = charLength - list[i].length;
-        output += "\n" + "\u2503" + list[i] + " ".repeat(space) + "\u2503" + "\n" + middle + "\n";
-        result = output + "\u2503" + list[list.length - 1] + "\u2503" + "\n" + bottom;
-    } return result;
+        let space = list[i] + " ".repeat(charLength - list[i].length);
+        let spaceLastItem = list[list.length - 1] + " ".repeat(charLength - list[list.length - 1].length);
+        outputMiddle += "\n" + drawBarsAround(space) + "\n" + middle + "\n";
+        outputTopBottom = top + outputMiddle + drawBarsAround(spaceLastItem) + "\n" + bottom;
+    } return outputTopBottom;
 }
 
 // console.log(nameArr());
@@ -92,7 +73,6 @@ const boxIt = function(list, charLength, bars, line, top, bottom, middle) {
 console.log(boxIt(
     nameArr(), 
     lengthOfChar(nameArr()),
-    drawBarsAround(nameArr(),lengthOfChar(nameArr())),
     drawLine(lengthOfChar(nameArr())),
     drawTopBorder(nameArr(), drawLine(lengthOfChar(nameArr()))),
     drawBottomBorder(nameArr(), drawLine(lengthOfChar(nameArr()))),
