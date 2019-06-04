@@ -52,14 +52,15 @@ const boxIt = function(list, charLength, line, top, bottom, middle) {
         return top + "\n" + "\u2503" +  list[0] + "\u2503" + "\n" + bottom;
     } 
     
-    let outputMiddle = "";
+    let outputMiddle = top + "";
     let outputTopBottom = "";
+    let spaceLastItem = list[list.length - 1] + " ".repeat(charLength - list[list.length - 1].length);
     for ( let i = 0; i < list.length - 1; i++) {
         let space = list[i] + " ".repeat(charLength - list[i].length);
-        let spaceLastItem = list[list.length - 1] + " ".repeat(charLength - list[list.length - 1].length);
-        outputMiddle += "\n" + drawBarsAround(space) + "\n" + middle + "\n";
-        outputTopBottom = top + outputMiddle + drawBarsAround(spaceLastItem) + "\n" + bottom;
-    } return outputTopBottom;
+        outputMiddle += "\n" + drawBarsAround(space) + "\n" + middle ;
+    }
+    outputTopBottom = outputMiddle + "\n" + drawBarsAround(spaceLastItem) + "\n" + bottom;
+    return outputTopBottom;
 }
 
 // console.log(nameArr());
