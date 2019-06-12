@@ -81,22 +81,30 @@ class Turtle {
             }
         } 
         const xCoord = Math.abs(maxX - minX);
-        const yCoord = Math.abs(maxY - minY);
+        // const yCoord = Math.abs(maxY - minY);
         // console.log(`minx is ${minX} maxx is ${maxX} miny is ${minY} maxy is ${maxY}`)
         // console.log(xCoord, yCoord)
-        // for (let i = minY; i < yCoord; i++) {
-        //     console.log(`minY is ${minY} maxY is ${maxY}`)
-        //     for ( let j = minX; j < xCoord; j++) {
-        //         console.log(`minX is ${minX} maxX is ${maxX}`)
-        //         if (this.position.includes([j,i])) {
-        //             console.log([j,i])
-        //             console.log('*')
-        //         } else {
-        //             console.log("-")
-        //         }
-        //     }
-        // }
-        console.log('-- END LOG')
+        let obj = {};
+        for ( let arrays of this.position) {
+            obj[arrays] = true;
+        }
+        const objArr = Object.keys(obj)
+
+        let result = '';
+        for (let i = minY; i <= maxY; i++) {
+            for ( let j = minX; j <= maxX; j++) {
+                let coord = [j,i];
+                let coordToString = coord.toString();
+                // console.log(coord.toString())
+                for ( let keys of objArr) {
+                    if (keys === coordToString) {
+                        result += '*'
+                    } else {
+                        result += '-'
+                    }
+                } result += '\n'
+            } 
+        } console.log(result);
     }
 }
 
