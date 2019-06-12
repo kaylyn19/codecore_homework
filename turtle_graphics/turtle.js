@@ -87,27 +87,25 @@ class Turtle {
         let obj = {};
         for ( let arrays of this.position) {
             obj[arrays] = true;
-        }
+        } 
         const objArr = Object.keys(obj)
 
         let result = '';
         for (let i = minY; i <= maxY; i++) {
             for ( let j = minX; j <= maxX; j++) {
-                let coord = [j,i];
-                let coordToString = coord.toString();
+                let coord =`${j},${i}`;
+                // let coordToString = coord.toString();
                 // console.log(coord.toString())
-                for ( let keys of objArr) {
-                    if (keys === coordToString) {
-                        result += '*'
-                    } else {
-                        result += '-'
-                    }
-                } result += '\n'
-            } 
+                if (obj[coord]) {
+                    result += "*"
+                } else {
+                    result += "-"
+                } 
+            } result += "\n"
         } console.log(result);
     }
 }
 
-const flash = new Turtle(0, 0).forward(3).left().forward(3);
-// console.log(flash.allPoints())
+const flash = new Turtle(0, 0).forward(3).left().forward(10).right().forward(3).left().left().forward(5);
+console.log(flash.allPoints())
 console.log(flash.print())
