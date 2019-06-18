@@ -1,7 +1,9 @@
 0 [ ] something
-2 [ ] else
-2 [ ] else
-3 [ ] what else
-5 [ ] wat else
+2 [*] else
+3 [*] what
 5 [ ] wat else
 6 [ ] what?
+8 [ ] what
+11 [ ] why
+12 [*] not
+11 [ ] more fun
