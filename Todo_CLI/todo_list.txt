@@ -1,5 +1,4 @@
-0 [ ] something
-3 [*] what
-8 [ ] what
-12 [*] not
-
+0 [ ] new
+1 [ ] tasks
+2 [ ] are
+3 [ ] added

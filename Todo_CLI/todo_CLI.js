@@ -26,33 +26,35 @@ const rl = readline.createInterface({
 });
 
 // let list = '';
-const fileName = 'todo_list.txt';
-const splitTaskInArr = fs.readFileSync(fileName).toString().split('\n');
+// const fileName = 'todo_list.txt';
+// const splitTaskInArr = fs.readFileSync(fileName).toString().split('\n');
 console.log('Welcome to TODO CLI!\n------------------\n')
 
 const menu = () => {
     rl.question ('(v) View • (n) New • (cX) Complete • (dX) Delete • (q) Quit\n>', (response) => {
-        let list = '';
         if (response.toLowerCase() === 'v') {
-            getData(fileName);
-        } else if (response.toLowerCase() === 'n') {
+            getData('todo_list.txt');
+        }
+        
+        else if (response.toLowerCase() === 'n') {
             rl.question('what?\n>', (addNew) => {
-                let order = 1;
-                if (splitTaskInArr.length === 0) {
-                    order = 1;
-                }else {
-                    order = splitTaskInArr.length;
+                let list = '';
+                let countTasksInFile = 1;
+                if (fs.readFileSync('todo_list.txt').toString().split('\n').length === 0) {
+                    countTasksInFile = 1;
+                } else {
+                    countTasksInFile = fs.readFileSync('todo_list.txt').toString().split('\n').length - 1;
                 }
-                list += `${order} [ ] ${addNew}\n`
-                fs.appendFile(fileName, list, {encoding:'utf8'}, (err) => {
-                    if (err) {
-                        console.err(err);
-                    } else {
-                        menu();
-                    }
+
+                list += `${countTasksInFile} [ ] ${addNew}\n`;
+                fs.appendFile('todo_list.txt', list, (err) => {
+                    if (err) {console.err(err)} 
+                    else {menu()}
                 })
-            })
-        } else if (response.toLowerCase()[0] === 'c') {
+            })   
+        } 
+        
+        else if (response.toLowerCase()[0] === 'c') {
             completeResult = '';
             for (let tasks of splitTaskInArr) {
                 let taskSplit = tasks.split(" ");
@@ -67,7 +69,9 @@ const menu = () => {
             } 
             write(fileName, completeResult);
             menu();
-        } else if (response.toLowerCase()[0] === 'd') {
+        } 
+        
+        else if (response.toLowerCase()[0] === 'd') {
             deleteResult = '';
             for (let tasks of splitTaskInArr) {
                 let taskSplit = tasks.split(" ");
@@ -83,9 +87,11 @@ const menu = () => {
                     deleteResult += `${tasks}\n`
                 }
             } //console.log(deleteResult)
-            // write(fileName, deleteResult);
+            write(fileName, deleteResult);
             menu();
-        } else {
+        } 
+        
+        else {
             rl.close();
         }
     })
