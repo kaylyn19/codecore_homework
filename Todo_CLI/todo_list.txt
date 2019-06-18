@@ -1,5 +1,5 @@
 0 [ ] something
 3 [*] what
-6 [ ] what?
 8 [ ] what
 12 [*] not
+

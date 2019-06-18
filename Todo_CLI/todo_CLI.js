@@ -25,13 +25,14 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-let list = '';
+// let list = '';
 const fileName = 'todo_list.txt';
 const splitTaskInArr = fs.readFileSync(fileName).toString().split('\n');
 console.log('Welcome to TODO CLI!\n------------------\n')
 
 const menu = () => {
     rl.question ('(v) View • (n) New • (cX) Complete • (dX) Delete • (q) Quit\n>', (response) => {
+        let list = '';
         if (response.toLowerCase() === 'v') {
             getData(fileName);
         } else if (response.toLowerCase() === 'n') {
@@ -72,13 +73,17 @@ const menu = () => {
                 let taskSplit = tasks.split(" ");
                 if (taskSplit[0] === response.slice(1)) {
                     let indexOfSelected = splitTaskInArr.indexOf(tasks)
+                    if (taskSplit[1] === '[*]') {
+                    console.log(`\ndeleted ${taskSplit[2]}\n`)                   
+                    } else if (taskSplit[1] === '['){
+                        console.log(`\ndeleted ${taskSplit[3]}\n`)
+                    }
                     splitTaskInArr.splice(indexOfSelected, 0);
-                    console.log(`\ndeleted ${taskSplit[3]}\n`)
                 } else {
                     deleteResult += `${tasks}\n`
                 }
             } //console.log(deleteResult)
-            write(fileName, deleteResult);
+            // write(fileName, deleteResult);
             menu();
         } else {
             rl.close();
