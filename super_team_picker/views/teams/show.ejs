@@ -1,2 +1,41 @@
 <%- include("../../partials/header")%>
+<form action="/cohorts/<%= record.id%>">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title"><%= record.name %></h5>
+            <p class="card-text"><%= record.members %></p>
+        </div>
+    </div>
+
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0">Method</legend>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="TeamCount" id="gridRadios1" value="option1" checked>
+          <label class="form-check-label" for="gridRadios1">
+            Team Count
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="NumberPerTeam" id="gridRadios2" value="option2">
+          <label class="form-check-label" for="gridRadios2">
+            Number Per Team
+          </label>
+        </div>
+    </div>
+    <label for="quantity">Quantity</label>
+    <input type="text" name='quantity'>
+    <input type="submit" value="Assign">
+</form>
+
+<form action="/cohorts/<%= record.id%>" method=POST>
+    <input type="hidden" value="Delete" name='_method'>
+    <input type="submit" value="Delete">
+</form>
+
+<form action="/cohorts/<%= record.id%>/edit">
+    <input type="submit" value="Edit">
+</form>
+
+
 <%- include("../../partials/footer")%>
