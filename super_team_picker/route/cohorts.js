@@ -54,7 +54,34 @@ router.delete('/:id', (req,res) => {
 })
 
 router.get('/:id/edit', (req,res) => {
+    const id = req.params.id;
+    knex('cohorts')
+        .where('id', id)
+        .first()
+        .then((data) => {
+            if (data) {
+                res.render('teams/edit', {record: data})
+            } else {
+                res.send('<div>The rquest is not available</div>')
+            }
+        })
+})
 
+router.put('/:id', (req, res) => {
+    const id = req.params.id
+    knex('cohorts')
+        .where('id', id)
+        .first()
+        .update({
+            name: req.body.name ,
+            members: req.body.members,
+            logoUrl: req.body.url
+        })
+        .returning('*')
+        .then((data) => {
+            const record = data[0];
+            res.redirect(`/cohorts/${record.id}`)
+        })
 })
 
 module.exports = router

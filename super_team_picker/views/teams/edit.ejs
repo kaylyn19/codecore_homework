@@ -1,2 +1,22 @@
 <%- include("../../partials/header")%>
+<form action="/cohorts/<%= record.id %>" method=POST>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Logo Url</label>
+    <input type="url" name='url' class="form-control" id="exampleFormControlInput1" placeholder="https://example.com/some.png" value="<%= record.url%>">
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Name</label>
+    <input type="text" name='name' class="form-control" id="exampleFormControlInput1" value="<%= record.name%>">
+  </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">With textarea</span>
+        </div>
+        <textarea class="form-control" name="members" aria-label="With textarea"><%= record.members%></textarea>
+    </div>
+    <input type="hidden" name="_method" value='PUT'>
+    <input type="submit" value="Update">
+</form>
 <%- include("../../partials/footer")%>
