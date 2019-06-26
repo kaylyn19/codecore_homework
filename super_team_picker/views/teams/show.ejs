@@ -1,41 +1,66 @@
 <%- include("../../partials/header")%>
 <form action="/cohorts/<%= record.id%>">
-    <div class="card" style="width: 18rem;">
+    <div class="card w-75">
         <div class="card-body">
-            <h5 class="card-title"><%= record.name %></h5>
-            <p class="card-text"><%= record.members %></p>
+            <h2 class="card-title"><%= record.name %></h2>
+            <p class="card-text">  <%= record.members %></p>
         </div>
+        <br>
+        <hr>
+        <br>
+        <div class="column">
+            <legend class="col-form-label col-sm-2 pt-0">Method</legend>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="method" id="gridRadios1" value="teamCount" checked>
+                    <label class="form-check-label" for="gridRadios1">Team Count</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="method" id="gridRadios2" value="numberPerTeam">
+                    <label class="form-check-label" for="gridRadios2">Number Per Team</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <label for="exampleFormControlInput1">Quantity</label>
+        <input type="text" name='name' class="form-control" id="exampleFormControlInput1">
+        <br>
+        <button type="submit" class="btn btn-primary">Assign</button>
     </div>
-
-    <div class="row">
-      <legend class="col-form-label col-sm-2 pt-0">Method</legend>
-      <div class="col-sm-10">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="TeamCount" id="gridRadios1" value="option1" checked>
-          <label class="form-check-label" for="gridRadios1">
-            Team Count
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="NumberPerTeam" id="gridRadios2" value="option2">
-          <label class="form-check-label" for="gridRadios2">
-            Number Per Team
-          </label>
-        </div>
-    </div>
-    <label for="quantity">Quantity</label>
-    <input type="text" name='quantity'>
-    <input type="submit" value="Assign">
 </form>
 
-<form action="/cohorts/<%= record.id%>" method=POST>
+<form action="/cohorts/<%= record.id%>" method=POST >
     <input type="hidden" value="Delete" name='_method'>
-    <input type="submit" value="Delete">
+    <button type="submit" value="Delete" class="btn btn-primary">Delete</button>
 </form>
 
 <form action="/cohorts/<%= record.id%>/edit">
-    <input type="submit" value="Edit">
+    <button type="submit" value="Edit" class="btn btn-primary">Edit</button>
 </form>
 
+<div>
+<p><%array.length%></p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Members</th>
+            </tr>
+        </thead>
+    <table>
+
+    <% for (let i = 1; i < quantity+1; i++) {%>
+    </table>
+        <tbody>
+            <tr>
+                <th scope="row"><%= i%></th>
+                <td><%= %></td>
+            </tr>
+        </tbody>
+    </table>
+    <% } %>
+</div>
 
 <%- include("../../partials/footer")%>
