@@ -6,7 +6,6 @@ router.get('/new', (req, res) => {
     res.render('teams/new')
 })
 
-const COOKIE_MAX_AGE=1000 * 60 * 60 * 24 * 7
 router.post('/', (req, res) => {
     const members = req.body.members
     knex('cohorts')
@@ -20,7 +19,6 @@ router.post('/', (req, res) => {
             const record = data[0]
             res.redirect(`/cohorts/${record.id}`)
         })
-    res.cookie('members', members, {maxAge: COOKIE_MAX_AGE})
 })
 
 router.get('/', (req, res) => {
@@ -32,6 +30,8 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:id', (req,res) => {
+    const {method, quantity} = req.query
+
     function shuffle(array) {
         let i, j, k;
         for (i = array.length-1; i >= 0; i--) {
@@ -42,47 +42,11 @@ router.get('/:id', (req,res) => {
         } return array;
     }
 
-    let result = [];
+    let teams = [];
     function separateIntoTeams (value) {
         for (let i = 0; i < value; i++) {
-            result.push([])
-        } return result;
-    }
-
-    function assign(arr) {
-        if (arr.length===0) {
-            return result
-        } else {
-            for (let i = 0; i < result.length; i ++) {
-                result[i].push(arr[0])
-                arr.shift()
-            }
-            assign(arr)
-
-        } return result
-    }
-    const members = req.cookies.members
-    const quantity = Number(req.query.quantity)
-    const split = members.split(',');
-    const method = req.query.method
-    const shuffleArr = shuffle(split);
-    const remainder = shuffleArr % quantity
-    const groups = Math.floor(shuffleArr.length/quantity);
-
-    if (method === 'teamCount') {
-        console.log('teamcount');
-        separateIntoTeams(quantity);
-        assign(shuffleArr)
-    } else {
-        console.log('Number Per Team');
-        if (remainder > Math.ceil(quantity/2)) {
-            separateIntoTeams(groups+1)
-            arr = assign(shuffleArr)
-        } 
-        // else {
-        //     separateIntoTeams(groups);
-        //     assign(shuffleArr)
-        // }
+            teams.push([])
+        } return teams;
     }
 
     const id = req.params.id
@@ -91,12 +55,30 @@ router.get('/:id', (req,res) => {
         .first()
         .then((data) => {
             if (data) {
-                res.render('teams/show', {record: data, method:method, quantity:quantity, array: shuffleArr})
+                const splitMembers = data.members.split(',')
+                const shuffledMembers = shuffle(splitMembers)
+                const groups = Math.ceil(shuffledMembers.length / quantity)
+                if (method === 'teamCount') {
+                    separateIntoTeams(quantity)
+                    console.log('separted into teams: ', teams)
+                    for (let i = 0; i < shuffledMembers.length; i++) {
+                        let arrayIndex = i % quantity
+                        teams[arrayIndex].push(shuffledMembers[i])
+                    } console.log(teams)
+                } else {
+                    separateIntoTeams(groups)
+                    for (let j = 0; j < shuffledMembers.length; j++) {
+                        let arrayIndex = j % groups
+                        teams[arrayIndex].push(shuffledMembers[j])
+                    } console.log(teams)
+                }
+                res.render('teams/show', {record: data, shuffledMembers, method, quantity, teams})
             } else {
                 res.send('The request is not available')
             }
         })
 })
+
 
 router.delete('/:id', (req,res) => {
     const id = req.params.id
