@@ -49,6 +49,14 @@ router.get('/:id', (req,res) => {
         } return teams;
     }
 
+    function assign(arr, value) {
+        for (let i = 0; i < arr.length; i++) {
+            let arrayIndex = i % value
+            teams[arrayIndex].push(arr[i])
+            console.log(arr[i])
+        } 
+    }
+
     const id = req.params.id
     knex('cohorts')
         .where('id', id)
@@ -57,19 +65,13 @@ router.get('/:id', (req,res) => {
             if (data) {
                 const splitMembers = data.members.split(',')
                 const shuffledMembers = shuffle(splitMembers)
-                const groups = Math.ceil(shuffledMembers.length / quantity)
+                const groups = Math.floor(shuffledMembers.length / quantity)
                 if (method === 'teamCount') {
                     separateIntoTeams(quantity)
-                    for (let i = 0; i < shuffledMembers.length; i++) {
-                        let arrayIndex = i % quantity
-                        teams[arrayIndex].push(shuffledMembers[i])
-                    } console.log(teams)
+                    assign(shuffledMembers, quantity)
                 } else if (method === 'numberPerTeam') {
                     separateIntoTeams(groups)
-                    for (let j = 0; j < shuffledMembers.length; j++) {
-                        let arrayIndex = j % groups
-                        teams[arrayIndex].push(shuffledMembers[j])
-                    } console.log(teams)
+                    assign(shuffledMembers, groups)
                 }
                 res.render('teams/show', {record: data, shuffledMembers, method, quantity, teams})
             } else {
