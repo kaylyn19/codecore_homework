@@ -60,12 +60,11 @@ router.get('/:id', (req,res) => {
                 const groups = Math.ceil(shuffledMembers.length / quantity)
                 if (method === 'teamCount') {
                     separateIntoTeams(quantity)
-                    console.log('separted into teams: ', teams)
                     for (let i = 0; i < shuffledMembers.length; i++) {
                         let arrayIndex = i % quantity
                         teams[arrayIndex].push(shuffledMembers[i])
                     } console.log(teams)
-                } else {
+                } else if (method === 'numberPerTeam') {
                     separateIntoTeams(groups)
                     for (let j = 0; j < shuffledMembers.length; j++) {
                         let arrayIndex = j % groups

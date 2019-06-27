@@ -29,21 +29,17 @@
         <button type="submit" class="btn btn-primary">Assign</button>
     </div>
 </form>
-
+<br>
 <form action="/cohorts/<%= record.id%>" method=POST >
     <input type="hidden" value="Delete" name='_method'>
-    <button type="submit" value="Delete" class="btn btn-primary">Delete</button>
+    <button type="submit" value="Delete" class="btn btn-primary" style="padding:0.4em 21em 0.4em 21em">Delete</button>
 </form>
-
+<br>
 <form action="/cohorts/<%= record.id%>/edit">
-    <button type="submit" value="Edit" class="btn btn-primary">Edit</button>
+    <button type="submit" value="Edit" class="btn btn-primary" style="padding:0.4em 21.5em 0.4em 21.5em">Edit</button>
 </form>
 
 <div>
- <p>members: <%= shuffledMembers%></p>
-<p>teams: <%= teams%></p>
-
-
     <table class="table">
         <thead>
             <tr>
@@ -51,18 +47,17 @@
                 <th scope="col">Members</th>
             </tr>
         </thead>
-    <table>
+    </table>
 
-    <% for (let i = 0 ; i < teams; i++) {%>
-    </table>
-        <tbody>
-            <tr>
-                <th scope="row"><%= i%></th>
+    <% for (let i = 0 ; i < teams.length; i++) { %>
+        <table class="table">
+            <tbody>
+                <tr>
+                <th scope="row"><%= i + 1%></th>
                 <td><%= teams[i] %></td>
-            </tr>
-        </tbody>
-    </table>
+                </tr>
+            </tbody>
+        </table>
     <% } %>
 </div>
-
 <%- include("../../partials/footer")%>
