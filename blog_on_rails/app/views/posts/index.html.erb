@@ -1,0 +1,5 @@
+<% @post.each do |record| %>
+    <h2><%= link_to record.title, post_path(record.id) %></h2>
+    <p><%= record.body %><p>
+    <hr>
+<% end %>
