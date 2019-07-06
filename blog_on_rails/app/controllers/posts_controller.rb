@@ -4,6 +4,13 @@ class PostsController < ApplicationController
     end
 
     def create
+        post_params = params.require(:post).permit(:title, :body)
+        @post = Post.new post_params
+        if @post.save
+            redirect_to post_path(@post.id), notice: "Post Saved!"
+        else
+            render :new
+        end
     end
 
     def show
