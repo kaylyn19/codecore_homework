@@ -15,6 +15,8 @@ class PostsController < ApplicationController
 
     def show
         @post = Post.find_by_id params[:id]
+        @comment = Comment.new
+        @comments = @post.comments.order(created_at: :desc)
     end
 
     def index
@@ -24,7 +26,7 @@ class PostsController < ApplicationController
     def destroy
         @post = Post.find params[:id]
         @post.destroy
-        redirect_to posts_path
+        redirect_to root_path
     end
 
     def edit
