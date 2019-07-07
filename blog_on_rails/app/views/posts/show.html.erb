@@ -3,10 +3,17 @@
 <small><%= time_ago_in_words(@post.updated_at)%></small>
 
 <%= link_to "Delete", post_path(@post.id), method: :delete, data: {confirm: "Are you sure you want to delete the post?"}%>
-<%= link_to "Edit", edit_post_path %>
+<%= link_to "Edit", edit_post_path(@post) %>
+
 <br>
+
 <h1>Comments</h1>
 <%= form_with model: [@post, @comment], local: true do |form| %>
+
+    <% if @comment.errors.any? %>
+        <p><% @comment.errors.full_messages.join(",")%></p>
+    <% end %>
+
     <div>
         <%= form.label :body %>
         <%= form.text_field :body%>

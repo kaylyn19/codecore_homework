@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# Comment.delete_all
+Comment.delete_all
 Post.delete_all
 
 50.times do 
@@ -16,9 +16,16 @@ Post.delete_all
         created_at: Faker::Date.backward(365 * 3),
         updated_at: Faker::Date.backward(365 * 3)
     )
-    # if p.valid?
-    # end
+    if p.valid?
+        p.comments = rand(1..5).times.map do
+            Comment.create(
+                body: Faker::ChuckNorris.fact,
+                # created_at: Faker::Date.backward(365 * 3),
+                # updated_at: Faker::Date.backward(365 * 3)
+            )
+        end    
+    end
 end
 
-p "generated {Post.all.count} posts"
-# p "generated {Comment.all.count} comments"
+p "generated #{Post.all.count} posts"
+p "generated #{Comment.all.count} comments"
