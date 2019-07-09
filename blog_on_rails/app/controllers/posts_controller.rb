@@ -17,11 +17,11 @@ class PostsController < ApplicationController
     def show
         # @post = Post.find_by_id params[:id]
         @comment = Comment.new
-        @comments = @post.comments.order("updated_at desc")
+        @comments = @post.comments.order(updated_at: :desc)
     end
 
     def index
-        @post = Post.all
+        @post = Post.all.order(updated_at: :desc)
     end
 
     def destroy

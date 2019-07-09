@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>BlogOnRails</title>
+    <title>Blog On Rails</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,10 +10,20 @@
   </head>
 
   <body>
-  <%= link_to "Home", root_path %>
-  <%= link_to "New Post", new_post_path %>
+    <nav>
+      <span class="nav-left">
+        <div class="nav-item"><%= link_to "Blog On Rails", root_path%></div>
+      </span>
 
-  <% flash[:notice] || flash[:alert] %>
-  <%= yield %>
+      <span class="nav-right">
+        <div class="nav-item"><%= link_to "Home", root_path %></div>
+        <div class="nav-item"><%= link_to "New Post", new_post_path %></div>
+      </span>
+    </nav>
+    
+    
+
+    <% flash[:notice] || flash[:alert] %>
+    <%= yield %>
   </body>
 </html>
