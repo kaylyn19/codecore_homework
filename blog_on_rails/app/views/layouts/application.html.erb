@@ -15,15 +15,24 @@
         <div class="nav-item"><%= link_to "Blog On Rails", root_path%></div>
       </span>
 
+      <% flash[:notice] || flash[:alert] %>
+
       <span class="nav-right">
         <div class="nav-item"><%= link_to "Home", root_path %></div>
         <div class="nav-item"><%= link_to "New Post", new_post_path %></div>
+        <% if user_signed_in? %>
+          <p>Signed in as: <%= current_user.name%></p>
+          <%= link_to 'Log Out', session_path, method: :delete%>
+        <% else %>
+          <%= link_to 'Log In', new_session_path%>
+          <%= link_to 'Sign Up', new_user_path%>
+        <% end %>
+
       </span>
     </nav>
     
     
 
-    <% flash[:notice] || flash[:alert] %>
     <%= yield %>
   </body>
 </html>

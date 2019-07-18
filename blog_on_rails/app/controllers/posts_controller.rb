@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
     before_action :find_post_id, except: [:new, :create, :index]
+    before_action :authenticate!, except: [:show, :index]
 
     def new
         @post = Post.new

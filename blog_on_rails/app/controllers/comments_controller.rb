@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+    before_action :authenticate!
     def create
         comment_params = params.require(:comment).permit(:body)
         @comment = Comment.new comment_params
