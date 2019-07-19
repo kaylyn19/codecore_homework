@@ -25,7 +25,7 @@
             <p class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Signed in as: <%= link_to current_user.name%></p>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <p class="dropdown-item"><%= link_to "Change Profile", edit_user_path(current_user.id)%></p>
-              <p class="dropdown-item"><%= link_to "Change Password"%></p>
+              <p class="dropdown-item"><%= link_to "Change Password", edit_password_path(current_user.id)%></p>
             </div>
           </div>
           <%= link_to 'Log Out', session_path, method: :delete%>
