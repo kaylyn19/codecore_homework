@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
     before_action :find_post_id, except: [:new, :create, :index]
     before_action :authenticate!, except: [:show, :index]
+    before_action :authorize!, except: [:show, :index]
 
     def new
         @post = Post.new
@@ -8,6 +9,7 @@ class PostsController < ApplicationController
 
     def create
         @post = Post.new post_params
+        @post.user = current_user
         if @post.save
             redirect_to post_path(@post.id), notice: "Post Saved!"
         else
@@ -52,5 +54,9 @@ class PostsController < ApplicationController
 
     def find_post_id
         @post = Post.find params[:id]
+    end
+
+    def authorize!
+        redirect_to root_path, alert: "Not Authorized" unless can?(:crud, @post)
     end
 end
