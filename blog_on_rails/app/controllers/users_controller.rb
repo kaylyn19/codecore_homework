@@ -9,7 +9,20 @@ class UsersController < ApplicationController
             session[:user_id] = @user.id
             redirect_to root_path, notice: "Welcome!"
         else
-            render :new, "Unable to sign up. Try again."
+            render :new, alert: "Unable to sign up. Try again."
+        end
+    end
+
+    def edit
+        @user = User.find_by(id: current_user.id)
+    end
+
+    def update
+        @user = User.find_by(id: current_user.id)
+        if @user.update params.require(:user).permit(:name, :email)
+            redirect_to posts_path, notice: 'User Profile Successfully Updated'
+        else
+            render :edit, alert: 'Try Again!'
         end
     end
     

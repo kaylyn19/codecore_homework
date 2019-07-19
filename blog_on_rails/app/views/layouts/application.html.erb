@@ -21,7 +21,13 @@
         <div class="nav-item"><%= link_to "Home", root_path %></div>
         <div class="nav-item"><%= link_to "New Post", new_post_path %></div>
         <% if user_signed_in? %>
-          <p>Signed in as: <%= current_user.name%></p>
+          <div class="nav-item dropdown">
+            <p class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Signed in as: <%= link_to current_user.name%></p>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p class="dropdown-item"><%= link_to "Change Profile", edit_user_path(current_user.id)%></p>
+              <p class="dropdown-item"><%= link_to "Change Password"%></p>
+            </div>
+          </div>
           <%= link_to 'Log Out', session_path, method: :delete%>
         <% else %>
           <%= link_to 'Log In', new_session_path%>
@@ -30,8 +36,6 @@
 
       </span>
     </nav>
-    
-    
 
     <%= yield %>
   </body>
