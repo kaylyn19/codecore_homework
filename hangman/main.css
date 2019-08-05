@@ -1,8 +1,18 @@
 .gallow {
     display: flex;
 }
+
 .gallow-image {
     justify-content: center;
     width: 60%;
     margin: auto;
+}
+
+.letters {
+    display: flex;
+    justify-content: center;
+}
+
+.letter {
+    margin: 0.3em;
 }
