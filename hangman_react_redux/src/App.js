@@ -1,24 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+// Components
+import Keyboard from './components/keyboard';
+import Gallows from './components/gallows';
+import Word from './components/word';
+
+// State
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import rootReducer from './store/reducers';
+
 function App() {
+  const word = 'Subway';
+  const guessedWord = '_ _ B _ _ Y';
+
+  const store = createStore(rootReducer, composeWithDevTools())
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Provider store={store}>
+        <h1>Hangman</h1>
+        <Keyboard />
+        <Gallows />
+        <Word word={guessedWord} />
+      </Provider>
     </div>
   );
 }
