@@ -1,0 +1,13 @@
+<%- include("../../partials/header")%>
+
+<% for (let record of data) { %>
+<div class="card w-75">
+  <div class="card-body">
+    <h2 class="card-title"><img src="<%= record.logoUrl%>" alt="cohort_img" style="border-radius: 50%" width="50" height="50"><%= record.name %></h2>
+    <p class="card-text">  <%= record.members %></p>
+    <a href="/cohorts/<%= record.id %>" class="btn btn-primary">Show Cohort</a>
+  </div>
+</div>
+<br>
+<% } %>
+<%- include("../../partials/footer")%>
