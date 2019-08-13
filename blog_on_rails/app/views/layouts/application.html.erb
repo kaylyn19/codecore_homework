@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blog On Rails</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <nav>
+      <span class="nav-left">
+        <div class="nav-item"><%= link_to "Blog On Rails", root_path%></div>
+      </span>
+
+      <% flash[:notice] || flash[:alert] %>
+
+      <span class="nav-right">
+        <div class="nav-item"><%= link_to "Home", root_path %></div>
+        <div class="nav-item"><%= link_to "New Post", new_post_path %></div>
+        <% if user_signed_in? %>
+          <div class="nav-item dropdown">
+            <p class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Signed in as: <%= link_to current_user.name%></p>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p class="dropdown-item"><%= link_to "Change Profile", edit_user_path(current_user.id)%></p>
+              <p class="dropdown-item"><%= link_to "Change Password", edit_password_path(current_user.id)%></p>
+            </div>
+          </div>
+          <%= link_to 'Log Out', session_path, method: :delete%>
+        <% else %>
+          <%= link_to 'Log In', new_session_path%>
+          <%= link_to 'Sign Up', new_user_path%>
+        <% end %>
+
+      </span>
+    </nav>
+
+    <%= yield %>
+  </body>
+</html>
